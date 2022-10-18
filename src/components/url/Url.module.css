@@ -8,17 +8,37 @@
     border-radius: 4px;
 }
 
-.url rect, .url path, .url line {
+.url .arrowButton rect,
+.url .arrowButton path,
+.url .arrowButton line,
+.url .copyButton rect,
+.url .copyButton path {
     transition: all 0.25s ease;
 }
 
-.url:hover rect {
+.url:hover .arrowButton rect {
     fill: #b517cd;
     opacity: 1;
 }
 
-.url:hover path, .url:hover line {
+.url:hover .arrowButton path,
+.url:hover .arrowButton line,
+.copyButton:hover path {
     stroke: white;
+}
+
+.copyButton {
+    transition: all 0.25s ease;
+    opacity: 0;
+}
+
+.url:hover .copyButton {
+    opacity: 1;
+}
+
+.copyButton:hover rect {
+    fill: #b517cd;
+    opacity: 1;
 }
 
 .urlHeading {
@@ -39,4 +59,9 @@
     line-height: 26px;
 
     color: #9EA0A3;
+}
+
+.rightSide {
+    display: flex;
+    gap: 10px;
 }
