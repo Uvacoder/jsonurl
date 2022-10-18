@@ -16,7 +16,11 @@ export default async function handler(
         return res.status(200).send(req.query?.any || {});
     }
 
-    const record = getRecord(req.url || "");
-    console.log(record);
-    res.status(200).json({ in_development: true });
+    // BEht is the sample json
+    const record = await getRecord(req.url?.slice(1) || "BEht");
+    try {
+        return res.status(200).send(JSON.parse(record.body));
+    } catch {
+        res.status(200).json({ in_development: true });
+    }
 }
