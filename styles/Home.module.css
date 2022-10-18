@@ -7,13 +7,36 @@
 }
 
 .sidebar {
-    padding: 46px 10px 22px 10px;
+    display: flex;
+    flex-direction: column;
+    padding: 46px 10px 16px 10px;
     width: 279px;
     height: 100%;
     background: #262626;
     color: #fff;
     float: left;
     border-radius: 4px;
+}
+
+.currentPage {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-top: 46px;
+    padding: 0 30px;
+    background: #590485;
+    color: #fff;
+    height: 36px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.description {
+    margin-top: auto;
+    font-size: 14px;
+    color: #9EA0A3;
+    margin-left: 20px;
 }
 
 .logotype {

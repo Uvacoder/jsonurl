@@ -6,6 +6,7 @@ import { defaultUrl } from "util/defaultUrl";
 import { Url } from "components/url";
 import Image from "next/image";
 import logotype from "assets/logotype.svg";
+import iconMyJsons from "assets/icon-my-jsons.svg";
 
 const Home: NextPage = () => {
     const [urls, setUrls] = useState<any[]>([defaultUrl]);
@@ -27,6 +28,11 @@ const Home: NextPage = () => {
                 <div className={styles.logotype}>
                     <Image src={logotype} alt=""></Image>
                 </div>
+                <div className={styles.currentPage}>
+                    <Image src={iconMyJsons} alt=""></Image>
+                    <p>My jsons</p>
+                </div>
+                <p className={styles.description}>Mock backend for your app</p>
             </div>
             <main
                 className={styles.main}
