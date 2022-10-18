@@ -7,7 +7,6 @@ import { useState, useEffect } from "react";
 const Home: NextPage = () => {
     const [data, setData] = useState<any>(null);
 
-    // get data from jsonurl.vercel.app/{"name": "Oleh"}
     useEffect(() => {
         fetch(`https://jsonurl.vercel.app/{"name": "Oleh"}`)
             .then((res) => res.json())
