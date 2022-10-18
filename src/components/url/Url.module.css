@@ -1,0 +1,42 @@
+.url {
+    cursor: pointer;
+    display: flex;
+
+    flex-direction: column;
+    background-color: #222222;
+    padding: 20px 26px 26px 26px;
+    border-radius: 4px;
+}
+
+.url rect, .url path, .url line {
+    transition: all 0.25s ease;
+}
+
+.url:hover rect {
+    fill: #b517cd;
+    opacity: 1;
+}
+
+.url:hover path, .url:hover line {
+    stroke: white;
+}
+
+.urlHeading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.urlUrl {
+    font-size: 17px;
+}
+
+.urlBody {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 15px;
+    line-height: 26px;
+
+    color: #9EA0A3;
+}

@@ -1,4 +1,4 @@
-import styles from "../../styles/Home.module.css";
+import styles from "../url/Url.module.css";
 import SVG from "react-inlinesvg";
 import iconButton from "assets/arrow-button.svg";
 
