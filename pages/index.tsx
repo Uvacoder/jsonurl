@@ -17,7 +17,10 @@ const Home: NextPage = () => {
 
     const addUrl = (url: any) => {
         setUrls((prev) => {
-            const newUrls = [url, ...prev];
+            let newUrls: any = [url, ...prev];
+            newUrls = new Set(newUrls);
+            newUrls = [...newUrls];
+
             localStorage.setItem("urls", JSON.stringify(newUrls));
             return newUrls;
         });
@@ -29,17 +32,17 @@ const Home: NextPage = () => {
         } catch {
             return alert("Invalid JSON");
         }
-        if (data.seconds.trim() === "") return true;
-        if (typeof parseInt(data.seconds) !== "number") {
+        if (data.delay.trim() === "") return true;
+        if (typeof parseInt(data.delay) !== "number") {
             return alert("Invalid seconds");
         }
-        if (isNaN(parseInt(data.seconds))) {
+        if (isNaN(parseInt(data.delay))) {
             return alert("Invalid seconds");
         }
-        if (parseInt(data.seconds) < 0) {
+        if (parseInt(data.delay) < 0) {
             return alert("Invalid seconds");
         }
-        if (parseInt(data.seconds) > 4) {
+        if (parseInt(data.delay) > 4) {
             return alert("Invalid seconds");
         }
         return true;
@@ -64,12 +67,16 @@ const Home: NextPage = () => {
     });
 
     useEffect(() => {
+        console.log("useEffect");
         const urlsLS = localStorage.getItem("urls");
         if (urlsLS) {
             setUrls((prev) => [...prev, ...JSON.parse(urlsLS)]);
         } else {
             addUrl(defaultUrl);
         }
+        return () => {
+            setUrls([]);
+        };
     }, []);
 
     return (
@@ -121,7 +128,7 @@ const Home: NextPage = () => {
                     </p>
                 </div>
                 <input
-                    {...register("seconds")}
+                    {...register("delay")}
                     className={styles.seconds}
                     type="text"
                     placeholder="Loading in seconds"
