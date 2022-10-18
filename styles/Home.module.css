@@ -2,6 +2,8 @@
     display: flex;
     padding: 20px;
     gap: 20px;
+    flex-direction: row;
+    font-family: 'Roboto', sans-serif;
 }
 
 .sidebar {
@@ -14,8 +16,12 @@
 }
 
 .main {
+    display: flex;
+    flex-direction: column;
     height: 100%;
     flex: 1;
+    gap: 10px;
+    /* overflow: auto; */
 }
 
 .input {
@@ -24,6 +30,13 @@
     gap: 10px;
     display: flex;
     flex-direction: column;
+
+}
+
+.textarea {
+    position: relative;
+    display: flex;
+    flex: 1;
 }
 
 textarea.body {
@@ -40,6 +53,38 @@ textarea.body {
     border-radius: 4px;
     transition: all 0.25s ease;
 }
+
+textarea.body + .inputHint {
+
+}
+
+.inputHint {
+    position: absolute;
+    bottom: 15px;
+    left: 26px;
+    color: #9EA0A3;
+    font-style: italic;
+    font-size: 14px;
+    line-height: 26px;
+    transition: all 0.2s ease;
+}
+
+.inputHint a {
+    color: #fff;
+    transition: all 0.15s ease;
+}
+
+.inputHint a:hover {
+    color: #e749ff;
+}
+
+textarea.body:not(:placeholder-shown) + .inputHint {
+    opacity: 0;
+    user-select: none;
+    pointer-events: none;
+}
+
+
 
 textarea.body:focus {
     box-shadow: 0 0 0 6px rgba(0, 0, 0, .25),
@@ -83,9 +128,53 @@ textarea.body:focus {
     color: #fff;
     cursor: pointer;
     text-transform: uppercase;
-    transition: all 0.15s ease;
+    transition: all 0.25s ease;
+    font-weight: 500;
 }
 
 .button:hover {
-    background: #590485;
+    background: #b517cd;
+}
+
+.url {
+    cursor: pointer;
+    display: flex;
+
+    flex-direction: column;
+    background-color: #222222;
+    padding: 20px 26px 26px 26px;
+    border-radius: 4px;
+}
+
+.url rect, .url path, .url line {
+    transition: all 0.25s ease;
+}
+
+.url:hover rect {
+    fill: #b517cd;
+    opacity: 1;
+}
+
+.url:hover path, .url:hover line {
+    stroke: white;
+}
+
+.urlHeading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.urlUrl {
+    font-size: 17px;
+}
+
+.urlBody {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 15px;
+    line-height: 26px;
+
+    color: #9EA0A3;
 }
