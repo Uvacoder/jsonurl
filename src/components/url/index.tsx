@@ -6,8 +6,9 @@ import React from "react";
 
 export const Url = ({ url, body }: any) => {
     const copyToClipboard = (e: any) => {
-        e.preventDefault();
         navigator.clipboard.writeText(`https://jsonurl.com/${url}`);
+        if (e.type === "keydown") return;
+        e.preventDefault();
     };
 
     return (
