@@ -10,9 +10,13 @@ const client = new MongoClient(uri, {
     serverApi: ServerApiVersion.v1,
 });
 
-export const insertRecord = async (collection: string, data: any) => {
+export const insertRecord = async (data: any) => {
+    const timestamp = Date.now();
     const db = client.db('jsonurl');
-    await db.collection(collection).insertOne(data);
+    // await db.collection('urls').insertOne({ ...data, timestamp });
+    return await db
+        .collection('urls')
+        .findOneAndUpdate({ timestamp: -1 }, { $set: { ...data, timestamp } });
 };
 
 export const getRecord = async (id: string) => {

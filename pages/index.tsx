@@ -10,12 +10,15 @@ import iconMyJsons from "assets/icon-my-jsons.svg";
 import { useForm } from "react-hook-form";
 
 const Home: NextPage = () => {
-    const [urls, setUrls] = useState<any[]>([defaultUrl]);
+    const [urls, setUrls] = useState<any[]>([]);
     const { register, handleSubmit, reset } = useForm();
 
-    const addUrl = (url: string) => {
-        setUrls((prev) => [{ url }, ...prev]);
-        localStorage.setItem("urls", JSON.stringify(urls));
+    const addUrl = (url: any) => {
+        setUrls((prev) => {
+            const newUrls = [url, ...prev];
+            localStorage.setItem("urls", JSON.stringify(newUrls));
+            return newUrls;
+        });
     };
 
     const validate = (data: any) => {
@@ -40,16 +43,30 @@ const Home: NextPage = () => {
         return true;
     };
 
-    const onSubmit = handleSubmit((data: any) => {
+    const onSubmit = handleSubmit(async (data: any) => {
         const isValid = validate(data);
         if (!isValid) return;
-        reset();
+
+        try {
+            const response = await fetch("/posturl", {
+                method: "POST",
+                body: JSON.stringify(data),
+            });
+            reset();
+            const result = await response.json();
+            const _id = result._id;
+            addUrl({ ...data, _id });
+        } catch (error) {
+            console.log(error);
+        }
     });
 
     useEffect(() => {
         const urlsLS = localStorage.getItem("urls");
         if (urlsLS) {
             setUrls((prev) => [...prev, ...JSON.parse(urlsLS)]);
+        } else {
+            addUrl(defaultUrl);
         }
     }, []);
 
