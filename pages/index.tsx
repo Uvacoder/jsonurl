@@ -16,7 +16,7 @@ const Home: NextPage = () => {
 
     return (
         <div className={styles.container}>
-            <p>{"s"}</p>
+            <p>{data?.name}</p>
         </div>
     );
 };
