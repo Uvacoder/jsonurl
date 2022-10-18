@@ -4,6 +4,8 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import { defaultUrl } from "util/defaultUrl";
 import { Url } from "components/url";
+import Image from "next/image";
+import logotype from "assets/logotype.svg";
 
 const Home: NextPage = () => {
     const [urls, setUrls] = useState<any[]>([defaultUrl]);
@@ -21,7 +23,11 @@ const Home: NextPage = () => {
                     content="initial-scale=1.0, width=device-width"
                 />
             </Head>
-            <div className={styles.sidebar}></div>
+            <div className={styles.sidebar}>
+                <div className={styles.logotype}>
+                    <Image src={logotype} alt=""></Image>
+                </div>
+            </div>
             <main
                 className={styles.main}
                 style={{ width: "0px", overflow: "auto" }}

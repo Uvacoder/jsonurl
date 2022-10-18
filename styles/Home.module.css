@@ -7,12 +7,17 @@
 }
 
 .sidebar {
+    padding: 46px 10px 22px 10px;
     width: 279px;
     height: 100%;
     background: #262626;
     color: #fff;
     float: left;
     border-radius: 4px;
+}
+
+.logotype {
+    padding-left: 25px;
 }
 
 .main {
@@ -132,6 +137,6 @@ textarea.body:focus {
     font-weight: 500;
 }
 
-.button:hover {
+.button:hover, .button:focus {
     background: #b517cd;
 }

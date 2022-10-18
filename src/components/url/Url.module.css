@@ -1,11 +1,15 @@
 .url {
     cursor: pointer;
     display: flex;
-
     flex-direction: column;
     background-color: #222222;
     padding: 20px 26px 26px 26px;
     border-radius: 4px;
+    transition: all 0.25s ease;
+}
+
+.url:focus {
+    outline: none;
 }
 
 .url .arrowButton rect,
@@ -16,14 +20,19 @@
     transition: all 0.25s ease;
 }
 
-.url:hover .arrowButton rect {
+.url:hover .arrowButton rect,
+.url:focus .arrowButton rect
+ {
     fill: #b517cd;
     opacity: 1;
 }
 
 .url:hover .arrowButton path,
 .url:hover .arrowButton line,
-.copyButton:hover path {
+.copyButton:hover path,
+.url:focus .arrowButton path,
+.url:focus .arrowButton line,
+.copyButton:focus path {
     stroke: white;
 }
 
@@ -32,12 +41,19 @@
     opacity: 0;
 }
 
-.url:hover .copyButton {
+.url:hover .copyButton,
+.url:focus .copyButton {
     opacity: 1;
 }
 
-.copyButton:hover rect {
+.copyButton:hover rect,
+.copyButton:focus rect {
     fill: #b517cd;
+    opacity: 1;
+}
+
+.copyButton:focus {
+    outline: none;
     opacity: 1;
 }
 

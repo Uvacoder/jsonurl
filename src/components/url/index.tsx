@@ -5,7 +5,7 @@ import copyButton from "assets/copy-button.svg";
 import React from "react";
 
 export const Url = ({ url, body }: any) => {
-    const copyToClipboard = (e: React.MouseEvent) => {
+    const copyToClipboard = (e: any) => {
         e.preventDefault();
         navigator.clipboard.writeText(`https://jsonurl.com/${url}`);
     };
@@ -21,7 +21,9 @@ export const Url = ({ url, body }: any) => {
                 <p className={styles.urlUrl}>jsonurl.com/{url}</p>
                 <div className={styles.rightSide}>
                     <SVG
+                        tabIndex={0}
                         onClick={copyToClipboard}
+                        onKeyDown={copyToClipboard}
                         className={styles.copyButton}
                         src={copyButton.src}
                     />
