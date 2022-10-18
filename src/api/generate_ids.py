@@ -24,7 +24,7 @@ def upload_to_mongo():
     urls = []
 
     for id in ids:
-        url = {'_id': id, 'timestamp': -1, 'body': ''}
+        url = {'_id': id, 'timestamp': -1, 'body': '', 'delay': 0}
         urls.append(url)
 
     print("converting to documents done")
