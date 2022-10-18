@@ -8,9 +8,11 @@ import Image from "next/image";
 import logotype from "assets/logotype.svg";
 import iconMyJsons from "assets/icon-my-jsons.svg";
 import { useForm } from "react-hook-form";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 const Home: NextPage = () => {
     const [urls, setUrls] = useState<any[]>([]);
+    const [parent] = useAutoAnimate();
     const { register, handleSubmit, reset } = useForm();
 
     const addUrl = (url: any) => {
@@ -92,6 +94,7 @@ const Home: NextPage = () => {
             <main
                 className={styles.main}
                 style={{ width: "0px", overflow: "auto" }}
+                ref={parent as any}
             >
                 {urls.map((url) => {
                     return <Url url={url._id} body={url.body} key={url._id} />;
