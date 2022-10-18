@@ -9,9 +9,11 @@ import logotype from "assets/logotype.svg";
 import iconMyJsons from "assets/icon-my-jsons.svg";
 import { useForm } from "react-hook-form";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const Home: NextPage = () => {
     const [urls, setUrls] = useState<any[]>([]);
+    const [loading, setLoading] = useState(false);
     const [parent] = useAutoAnimate();
     const { register, handleSubmit, reset } = useForm();
 
@@ -49,8 +51,9 @@ const Home: NextPage = () => {
     };
 
     const onSubmit = handleSubmit(async (data: any) => {
+        setLoading(true);
         const isValid = validate(data);
-        if (!isValid) return;
+        if (!isValid) return setLoading(false);
 
         try {
             const response = await fetch("/posturl", {
@@ -63,6 +66,8 @@ const Home: NextPage = () => {
             addUrl({ ...data, _id });
         } catch (error) {
             console.log(error);
+        } finally {
+            setLoading(false);
         }
     });
 
@@ -139,6 +144,9 @@ const Home: NextPage = () => {
                     onClick={onSubmit}
                 >
                     Create JSON
+                    {loading && (
+                        <CircularProgress size={20} sx={{ color: "white" }} />
+                    )}
                 </button>
             </form>
         </div>
