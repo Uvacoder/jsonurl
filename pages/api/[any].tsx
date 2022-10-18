@@ -12,19 +12,15 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<any>
 ) {
-    // if (urlIsJson(req.url || "")) {
-    //     return res.status(200).send(req.query?.any || {});
-    // }
+    if (urlIsJson(req.url || "")) {
+        return res.status(200).send(req.query?.any || {});
+    }
 
-    // // BEht is the sample json
-    // const record = await getRecord(req.url?.slice(1) || "BEht");
-    // try {
-    //     return res.status(200).send(JSON.parse(record.body));
-    // } catch {
-    //     return res.status(200).json({ in_development: true });
-    // }
-    let ip = await fetch("https://api.ipify.org?format=json");
-    ip = await ip.json();
-
-    return res.status(200).json(ip);
+    // BEht is the sample json
+    const record = await getRecord(req.url?.slice(1) || "BEht");
+    try {
+        return res.status(200).send(JSON.parse(record.body));
+    } catch {
+        return res.status(200).json({ in_development: true });
+    }
 }
