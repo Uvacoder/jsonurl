@@ -7,13 +7,51 @@ import { Url } from "components/url";
 import Image from "next/image";
 import logotype from "assets/logotype.svg";
 import iconMyJsons from "assets/icon-my-jsons.svg";
+import { useForm } from "react-hook-form";
 
 const Home: NextPage = () => {
     const [urls, setUrls] = useState<any[]>([defaultUrl]);
+    const { register, handleSubmit, reset } = useForm();
+
+    const addUrl = (url: string) => {
+        setUrls((prev) => [{ url }, ...prev]);
+        localStorage.setItem("urls", JSON.stringify(urls));
+    };
+
+    const validate = (data: any) => {
+        try {
+            JSON.parse(data.body);
+        } catch {
+            return alert("Invalid JSON");
+        }
+        if (data.seconds.trim() === "") return true;
+        if (typeof parseInt(data.seconds) !== "number") {
+            return alert("Invalid seconds");
+        }
+        if (isNaN(parseInt(data.seconds))) {
+            return alert("Invalid seconds");
+        }
+        if (parseInt(data.seconds) < 0) {
+            return alert("Invalid seconds");
+        }
+        if (parseInt(data.seconds) > 4) {
+            return alert("Invalid seconds");
+        }
+        return true;
+    };
+
+    const onSubmit = handleSubmit((data: any) => {
+        const isValid = validate(data);
+        if (!isValid) return;
+        reset();
+    });
 
     useEffect(() => {
-        console.log(urls);
-    }, [urls]);
+        const urlsLS = localStorage.getItem("urls");
+        if (urlsLS) {
+            setUrls((prev) => [...prev, ...JSON.parse(urlsLS)]);
+        }
+    }, []);
 
     return (
         <div className={styles.container}>
@@ -45,7 +83,9 @@ const Home: NextPage = () => {
             <form className={styles.input}>
                 <div className={styles.textarea}>
                     <textarea
-                        name="body"
+                        {...register("body", {
+                            required: "Enter your JSON",
+                        })}
                         className={styles.body}
                         placeholder="Enter JSON here"
                     />
@@ -61,11 +101,16 @@ const Home: NextPage = () => {
                     </p>
                 </div>
                 <input
+                    {...register("seconds")}
                     className={styles.seconds}
                     type="text"
                     placeholder="Loading in seconds"
                 />
-                <button type="button" className={styles.button}>
+                <button
+                    type="button"
+                    className={styles.button}
+                    onClick={onSubmit}
+                >
                     Create JSON
                 </button>
             </form>
