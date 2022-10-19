@@ -20,6 +20,9 @@ const Home: NextPage = () => {
     const { register, handleSubmit, reset } = useForm();
 
     const addUrl = (url: any) => {
+        if (url.python) {
+            url.body = "python code";
+        }
         setUrls((prev) => {
             let newUrls: any = [url, ...prev];
             newUrls = new Set(newUrls);
@@ -91,14 +94,12 @@ const Home: NextPage = () => {
             const _id = result._id;
             addUrl({ ...data, _id });
         } catch (error) {
-            console.log(error);
         } finally {
             setLoading(false);
         }
     });
 
     useEffect(() => {
-        console.log("useEffect");
         const urlsLS = localStorage.getItem("urls");
         if (urlsLS) {
             setUrls((prev) => [...prev, ...JSON.parse(urlsLS)]);
