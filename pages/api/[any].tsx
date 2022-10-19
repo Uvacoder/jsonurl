@@ -16,9 +16,9 @@ export default async function handler(
         return res.status(200).send(req.query?.any || {});
     }
 
-    // BEht is the sample json
-    const record = await getRecord(req.url?.slice(1) || "BEht");
     try {
+        // BEht is the sample json
+        const record = await getRecord(req.url?.slice(1) || "BEht");
         return res.status(200).send(JSON.parse(record.body));
     } catch {
         return res.status(404).json({ name: "Not Found" });
