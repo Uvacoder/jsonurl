@@ -1,0 +1,25 @@
+.tabs {
+    height: 48px;
+    display: flex;
+    padding-bottom: 10px;
+}
+
+.tab {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    background: #1E1E1E;
+    z-index: 1;
+    transition: all 0.25s ease;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    color: #9EA0A3;
+}
+
+.active {
+    box-shadow: 0px 28px 26px rgba(0, 0, 0, 0.16);
+    cursor: default;
+    color: #fff;
+}

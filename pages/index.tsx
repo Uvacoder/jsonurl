@@ -10,11 +10,13 @@ import iconMyJsons from "assets/icon-my-jsons.svg";
 import { useForm } from "react-hook-form";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import CircularProgress from "@mui/material/CircularProgress";
+import { Tabs } from "components/tabs";
 
 const Home: NextPage = () => {
     const [urls, setUrls] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
     const [parent] = useAutoAnimate();
+    const [currentTab, setCurrentTab] = useState("json");
     const { register, handleSubmit, reset } = useForm();
 
     const addUrl = (url: any) => {
@@ -28,7 +30,7 @@ const Home: NextPage = () => {
         });
     };
 
-    const validate = (data: any) => {
+    const validateStatic = (data: any) => {
         try {
             JSON.parse(data.body);
         } catch {
@@ -48,6 +50,30 @@ const Home: NextPage = () => {
             return alert("Invalid seconds");
         }
         return true;
+    };
+
+    const validatePython = (data: any) => {
+        if (!data.python.trim()) return alert("Invalid python code");
+        if (!data.variable.trim()) return alert("No variable name");
+        if (data.variable.trim().startsWith("_")) {
+            return alert("Invalid variable name");
+        }
+        if (!data.variable.trim().match(/^[a-zA-Z0-9_]+$/)) {
+            return alert("Invalid variable name");
+        }
+        if (!data.python.trim().includes(data.variable.trim())) {
+            return alert("Variable not in python code");
+        }
+        return true;
+    };
+
+    const validate = (data: any) => {
+        if (currentTab === "json") {
+            return validateStatic(data);
+        }
+        if (currentTab === "python") {
+            return validatePython(data);
+        }
     };
 
     const onSubmit = handleSubmit(async (data: any) => {
@@ -112,43 +138,74 @@ const Home: NextPage = () => {
                     return <Url {...url} key={url._id} />;
                 })}
             </main>
-            <form className={styles.input}>
-                <div className={styles.textarea}>
-                    <textarea
-                        {...register("body", {
-                            required: "Enter your JSON",
-                        })}
-                        className={styles.body}
-                        placeholder="Enter JSON here"
-                    />
-                    <p className={styles.inputHint}>
-                        or in URL like&nbsp;
-                        <a
-                            href='https://jsonurl.com/{"name": "Max"}'
-                            target="_blank"
-                            rel="noreferrer"
-                        >
-                            {`jsonurl.com/{"name": "Max"}`}
-                        </a>
-                    </p>
-                </div>
-                <input
-                    {...register("delay")}
-                    className={styles.seconds}
-                    type="text"
-                    placeholder="Loading in seconds"
-                />
-                <button
-                    type="button"
-                    className={styles.button}
-                    onClick={onSubmit}
-                >
-                    Create JSON
-                    {loading && (
-                        <CircularProgress size={20} sx={{ color: "white" }} />
+            <div className={styles.rightBar}>
+                <Tabs currentTab={currentTab} setCurrentTab={setCurrentTab} />
+                <form className={styles.input}>
+                    <div className={styles.textarea}>
+                        {currentTab === "json" && (
+                            <>
+                                <textarea
+                                    {...register("body", {
+                                        required: "Enter your JSON",
+                                    })}
+                                    className={styles.body}
+                                    placeholder="Enter JSON here"
+                                />
+                                <p className={styles.inputHint}>
+                                    or in URL like&nbsp;
+                                    <a
+                                        href='https://jsonurl.com/{"name": "Max"}'
+                                        target="_blank"
+                                        rel="noreferrer"
+                                    >
+                                        {`jsonurl.com/{"name": "Max"}`}
+                                    </a>
+                                </p>
+                            </>
+                        )}
+                        {currentTab === "python" && (
+                            <>
+                                <textarea
+                                    {...register("python", {
+                                        required: "Enter your Python code",
+                                    })}
+                                    className={styles.body}
+                                    placeholder="Enter your Python code"
+                                />
+                            </>
+                        )}
+                    </div>
+                    {currentTab === "json" && (
+                        <input
+                            {...register("delay")}
+                            className={styles.seconds}
+                            type="text"
+                            placeholder="Loading in seconds"
+                        />
                     )}
-                </button>
-            </form>
+                    {currentTab === "python" && (
+                        <input
+                            {...register("variable")}
+                            className={styles.seconds}
+                            type="text"
+                            placeholder="What variable to return"
+                        />
+                    )}
+                    <button
+                        type="button"
+                        className={styles.button}
+                        onClick={onSubmit}
+                    >
+                        Create JSON
+                        {loading && (
+                            <CircularProgress
+                                size={20}
+                                sx={{ color: "white" }}
+                            />
+                        )}
+                    </button>
+                </form>
+            </div>
         </div>
     );
 };

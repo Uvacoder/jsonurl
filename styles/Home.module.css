@@ -51,8 +51,14 @@
     gap: 10px;
 }
 
-.input {
+.rightBar {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
     height: 100%;
+}
+
+.input {
     flex: 1;
     gap: 10px;
     display: flex;

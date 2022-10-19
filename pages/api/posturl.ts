@@ -19,5 +19,6 @@ export default async function handler(
         res.status(404).json({ name: 'Not Found' });
         return;
     }
+    console.log(result.value);
     res.status(200).json({ _id: result.value._id });
 }
