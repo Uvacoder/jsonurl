@@ -4,7 +4,7 @@ import iconButton from "assets/arrow-button.svg";
 import copyButton from "assets/copy-button.svg";
 import React from "react";
 
-export const Url = ({ url, body }: any) => {
+export const Url = ({ url, body, _id }: any) => {
     const copyToClipboard = (e: any) => {
         navigator.clipboard.writeText(`https://jsonurl.com/${url}`);
         if (e.type === "keydown") return;
@@ -13,13 +13,13 @@ export const Url = ({ url, body }: any) => {
 
     return (
         <a
-            href={`https://jsonurl.com/${url}`}
+            href={`https://jsonurl.com/${_id}`}
             target="_blank"
             rel="noreferrer"
             className={styles.url}
         >
             <div className={styles.urlHeading}>
-                <p className={styles.urlUrl}>jsonurl.com/{url}</p>
+                <p className={styles.urlUrl}>jsonurl.com/{_id}</p>
                 <div className={styles.rightSide}>
                     <SVG
                         tabIndex={0}
