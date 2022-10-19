@@ -105,7 +105,8 @@ textarea.body + .inputHint {
     color: #e749ff;
 }
 
-textarea.body:not(:placeholder-shown) + .inputHint {
+textarea.body:not(:placeholder-shown) +
+.inputHint {
     opacity: 0;
     user-select: none;
     pointer-events: none;
@@ -114,7 +115,8 @@ textarea.body:not(:placeholder-shown) + .inputHint {
 
 
 textarea.body:focus {
-    box-shadow: 0 0 0 6px rgba(0, 0, 0, .25),
+    box-shadow: 0 0 0 6px
+    rgba(0, 0, 0, .25),
     0 0 0 1px black;
 }
 
@@ -137,7 +139,8 @@ textarea.body:focus {
 }
 
 .seconds:focus {
-    box-shadow: 0 0 0 6px rgba(0, 0, 0, .25),
+    box-shadow: 0 0 0 6px
+    rgba(0, 0, 0, .25),
     0 0 0 1px black;
 }
 

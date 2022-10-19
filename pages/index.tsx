@@ -109,7 +109,7 @@ const Home: NextPage = () => {
                 ref={parent as any}
             >
                 {urls.map((url) => {
-                    return <Url url={url._id} body={url.body} key={url._id} />;
+                    return <Url {...url} key={url._id} />;
                 })}
             </main>
             <form className={styles.input}>
