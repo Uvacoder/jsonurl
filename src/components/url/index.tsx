@@ -4,9 +4,9 @@ import iconButton from "assets/arrow-button.svg";
 import copyButton from "assets/copy-button.svg";
 import React from "react";
 
-export const Url = ({ url, body, _id }: any) => {
+export const Url = ({ _id, body }: any) => {
     const copyToClipboard = (e: any) => {
-        navigator.clipboard.writeText(`https://jsonurl.com/${url}`);
+        navigator.clipboard.writeText(`https://jsonurl.com/${_id}`);
         if (e.type === "keydown") return;
         e.preventDefault();
     };
