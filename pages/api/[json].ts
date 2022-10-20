@@ -1,5 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getRecord } from 'api/mongo';
+import { BackendMixpanel } from 'util/analytics';
+
+const mixpanel = new BackendMixpanel();
 
 const urlIsJson = (url: string): boolean => {
     const decodedUrl = decodeURI(url);
@@ -12,8 +15,13 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<any>
 ) {
-    console.log(req.query);
     if (urlIsJson(req.url || '')) {
+        await mixpanel.trackBackendUrlOpened(
+            (req.query?.json as string) || '0',
+            'rawJSON',
+            Boolean(req.query?.delay)
+        );
+
         if (req.query?.delay) {
             if (parseInt(req.query?.delay as string) > 4) {
                 res.status(400).json({ name: "Delay can'be greater than 4" });
@@ -34,6 +42,11 @@ export default async function handler(
     const record = await getRecord((req.query?.json as string) || 'BEht');
 
     if (record?.python && !record?.body) {
+        await mixpanel.trackBackendUrlOpened(
+            record?._id || '0',
+            'python',
+            false
+        );
         let code = record.python;
         code = code.replace(/print\(.*\)/gi, '');
         code = code + `\nprint(${record.variable})`;
@@ -58,6 +71,12 @@ export default async function handler(
     }
 
     try {
+        await mixpanel.trackBackendUrlOpened(
+            record?._id || '0',
+            'shortURL',
+            Boolean(record?.delay)
+        );
+
         setTimeout(
             () => {
                 res.status(200).send(JSON.parse(record.body));

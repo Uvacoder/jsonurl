@@ -20,7 +20,7 @@ export const insertRecord = async (data: any) => {
         {
             $set: {
                 ...data,
-                delay: parseInt(data.delay),
+                delay: data.delay ? parseInt(data.delay) : 0,
                 timestamp,
             },
         }

@@ -32,11 +32,23 @@ export class Mixpanel {
         });
     }
 
-    trackSomething = (value: string) => {
-        this.track('something', {
-            key: value,
+    trackUrlClick = (_id: any) => {
+        this.track('url clicked in UI', {
+            _id: _id,
         });
     };
+
+    trackBackendUrlOpened(
+        source: 'rawJSON' | 'shortURL' | 'python',
+        withDelay: boolean,
+        distinct_id: 'string'
+    ) {
+        this.track('backend url opened', {
+            source,
+            withDelay,
+            distinct_id,
+        });
+    }
 }
 
 export const useMixpanel = () => {
@@ -64,3 +76,41 @@ export const useMixpanel = () => {
         track('Page Viewed');
     }, [router.asPath]);
 };
+
+export class BackendMixpanel {
+    async track(event: string, properties: any) {
+        const options = {
+            method: 'POST',
+            headers: {
+                accept: 'text/plain',
+                'content-type': 'application/json',
+            },
+            body: JSON.stringify([
+                {
+                    properties: {
+                        token: 'a3137b3df0cbd9635bcc0b3f0c2fcb8d',
+                        ...properties,
+                    },
+                    event: event,
+                },
+            ]),
+        };
+
+        fetch('https://api.mixpanel.com/track', options)
+            .then((response) => response.json())
+            .then((response) => console.log(response))
+            .catch((err) => console.error(err));
+    }
+
+    async trackBackendUrlOpened(
+        distinct_id: string,
+        source: 'rawJSON' | 'shortURL' | 'python',
+        withDelay: boolean
+    ) {
+        this.track('Backend url opened', {
+            distinct_id,
+            source,
+            withDelay,
+        });
+    }
+}

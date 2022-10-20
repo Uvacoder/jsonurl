@@ -93,14 +93,26 @@ const Home: NextPage = () => {
         if (!isValid) return setLoading(false);
 
         try {
+            let dataToSend;
+            if (currentTab === "json") {
+                dataToSend = {
+                    body: data.body,
+                    delay: data.delay,
+                };
+            } else {
+                dataToSend = {
+                    python: data.python,
+                    variable: data.variable,
+                };
+            }
             const response = await fetch("/posturl", {
                 method: "POST",
-                body: JSON.stringify(data),
+                body: JSON.stringify(dataToSend),
             });
             reset();
             const result = await response.json();
             const _id = result._id;
-            addUrl({ ...data, _id });
+            addUrl({ ...dataToSend, _id });
         } catch (error) {
         } finally {
             setLoading(false);

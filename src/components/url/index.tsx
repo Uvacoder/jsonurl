@@ -3,6 +3,7 @@ import SVG from "react-inlinesvg";
 import iconButton from "assets/arrow-button.svg";
 import copyButton from "assets/copy-button.svg";
 import React from "react";
+import { Mixpanel } from "util/analytics";
 
 export const Url = ({ _id, body }: any) => {
     const copyToClipboard = (e: any) => {
@@ -11,12 +12,18 @@ export const Url = ({ _id, body }: any) => {
         e.preventDefault();
     };
 
+    const mixpanel = new Mixpanel(true);
+    const trackUrlOpen = () => {
+        mixpanel.trackUrlClick(_id);
+    };
+
     return (
         <a
             href={`https://jsonurl.com/${_id}`}
             target="_blank"
             rel="noreferrer"
             className={styles.url}
+            onClick={trackUrlOpen}
         >
             <div className={styles.urlHeading}>
                 <p className={styles.urlUrl}>jsonurl.com/{_id}</p>
