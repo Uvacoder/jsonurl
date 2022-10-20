@@ -3,6 +3,7 @@ import styles from "../styles/Home.module.css";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import { defaultUrl } from "util/defaultUrl";
+import { placeholder } from "util/pythonCodePlaceholder";
 import { Url } from "components/url";
 import Image from "next/image";
 import logotype from "assets/logotype.svg";
@@ -121,7 +122,7 @@ const Home: NextPage = () => {
         if (!names?.length) return setValue("variable", "");
         if (!names.length) return;
         setValue("variable", names[names.length - 1]);
-    }, [pythonCode, variable]);
+    }, [pythonCode]);
 
     return (
         <div className={styles.container}>
@@ -183,7 +184,7 @@ const Home: NextPage = () => {
                                         required: "Enter your Python code",
                                     })}
                                     className={styles.body}
-                                    placeholder="Enter your Python code"
+                                    placeholder={placeholder}
                                 />
                             </>
                         )}
@@ -197,12 +198,17 @@ const Home: NextPage = () => {
                         />
                     )}
                     {currentTab === "python" && (
-                        <input
-                            {...register("variable")}
-                            className={styles.seconds}
-                            type="text"
-                            placeholder="What variable to return"
-                        />
+                        <label className={styles.pythonLabel}>
+                            <p className={styles.pythonLabelName}>
+                                JSON variable:
+                            </p>
+                            <input
+                                {...register("variable")}
+                                className={styles.seconds}
+                                type="text"
+                                placeholder="json"
+                            />
+                        </label>
                     )}
                     <button
                         type="button"
