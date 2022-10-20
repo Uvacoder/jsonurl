@@ -16,6 +16,7 @@ export default async function handler(
         return res.status(200).send(req.query?.any || {});
     }
 
+    // BEht is the sample json
     const record = await getRecord(req.url?.slice(1) || 'BEht');
 
     if (record.python && !record.body) {
@@ -43,7 +44,6 @@ export default async function handler(
     }
 
     try {
-        // BEht is the sample json
         return res.status(200).send(JSON.parse(record.body));
     } catch {
         return res.status(404).json({ name: 'Not Found' });
