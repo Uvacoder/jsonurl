@@ -12,14 +12,23 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<any>
 ) {
+    console.log(req.query);
     if (urlIsJson(req.url || '')) {
-        return res.status(200).send(req.query?.any || {});
+        // return res.status(200).send(req.query?.json || {});
+
+        setTimeout(
+            () => {
+                res.status(200).send(req.query?.json || {});
+            },
+            req.query?.delay ? parseInt(`${req.query?.delay}000`) : 0
+        );
+        return;
     }
 
     // BEht is the sample json
-    const record = await getRecord(req.url?.slice(1) || 'BEht');
+    const record = await getRecord((req.query?.json as string) || 'BEht');
 
-    if (record.python && !record.body) {
+    if (record?.python && !record?.body) {
         let code = record.python;
         code = code.replace(/print\(.*\)/gi, '');
         code = code + `\nprint(${record.variable})`;
@@ -48,9 +57,9 @@ export default async function handler(
             () => {
                 res.status(200).send(JSON.parse(record.body));
             },
-            record.delay ? parseInt(`${record.delay}000`) : 0
+            record.delay ? parseInt(`${record?.delay}000`) : 0
         );
-    } catch {
+    } catch (e) {
         return res.status(404).json({ name: 'Not Found' });
     }
 }
