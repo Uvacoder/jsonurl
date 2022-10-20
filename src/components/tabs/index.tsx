@@ -1,8 +1,6 @@
 import styles from "./Tabs.module.css";
 
 export const Tabs = ({ currentTab, setCurrentTab }: any) => {
-    // const regex = /print\(.*\)/;
-
     return (
         <div className={styles.tabs}>
             <div

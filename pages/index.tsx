@@ -17,7 +17,10 @@ const Home: NextPage = () => {
     const [loading, setLoading] = useState(false);
     const [parent] = useAutoAnimate();
     const [currentTab, setCurrentTab] = useState("json");
-    const { register, handleSubmit, reset } = useForm();
+    const { register, handleSubmit, reset, watch, setValue } = useForm();
+
+    const pythonCode = watch("python");
+    const variable = watch("variable");
 
     const addUrl = (url: any) => {
         if (url.python) {
@@ -110,6 +113,15 @@ const Home: NextPage = () => {
             setUrls([]);
         };
     }, []);
+
+    useEffect(() => {
+        const match = /(\w+)(?=\s*=\s*)/g;
+        const names = pythonCode?.match(match);
+        if (!names) return setValue("variable", "");
+        if (!names?.length) return setValue("variable", "");
+        if (!names.length) return;
+        setValue("variable", names[names.length - 1]);
+    }, [pythonCode, variable]);
 
     return (
         <div className={styles.container}>

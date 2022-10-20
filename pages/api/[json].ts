@@ -22,9 +22,6 @@ export default async function handler(
         let code = record.python;
         code = code.replace(/print\(.*\)/gi, '');
         code = code + `\nprint(${record.variable})`;
-        // code = JSON.parse(code);
-        // console.log(record);
-        // console.log(code);
 
         const data = { language: 'python', source: code };
         const response = await fetch('https://emkc.org/api/v1/piston/execute', {
@@ -43,8 +40,6 @@ export default async function handler(
         } catch (error) {
             return res.status(200).send(output);
         }
-
-        return res.status(404).json({ python: 'python code' });
     }
 
     try {
