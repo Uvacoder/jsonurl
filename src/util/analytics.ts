@@ -9,7 +9,6 @@ export class Mixpanel {
         mixpanel.init('a3137b3df0cbd9635bcc0b3f0c2fcb8d', {
             debug: process.env.NODE_ENV === 'development',
         });
-        console.log(process.env.NODE_ENV === 'development', 'env');
     }
 
     track = (event: string, properties?: any) => {
