@@ -58,7 +58,6 @@ export default async function handler(
         });
         const result = await response.json();
         const output = result.output;
-        console.log(result);
         if (!output) {
             return res.status(500).send(result);
         }
