@@ -14,7 +14,12 @@ export default async function handler(
 ) {
     console.log(req.query);
     if (urlIsJson(req.url || '')) {
-        // return res.status(200).send(req.query?.json || {});
+        if (req.query?.delay) {
+            if (parseInt(req.query?.delay as string) > 4) {
+                res.status(400).json({ name: "Delay can'be greater than 4" });
+                return;
+            }
+        }
 
         setTimeout(
             () => {
