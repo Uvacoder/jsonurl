@@ -24,7 +24,7 @@ const Home: NextPage = () => {
     const variable = watch("variable");
 
     const addUrl = (url: any) => {
-        if (url.python) {
+        if (url.python && currentTab === "python") {
             url.body = "python code";
         }
         setUrls((prev) => {
@@ -194,7 +194,7 @@ const Home: NextPage = () => {
                             {...register("delay")}
                             className={styles.seconds}
                             type="text"
-                            placeholder="Loading in seconds"
+                            placeholder="Loading in seconds – up to 4"
                         />
                     )}
                     {currentTab === "python" && (

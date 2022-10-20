@@ -18,7 +18,7 @@ export default async function handler(
 
     const record = await getRecord(req.url?.slice(1) || 'BEht');
 
-    if (record.python) {
+    if (record.python && !record.body) {
         let code = record.python;
         code = code.replace(/print\(.*\)/gi, '');
         code = code + `\nprint(${record.variable})`;
