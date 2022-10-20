@@ -44,7 +44,12 @@ export default async function handler(
     }
 
     try {
-        return res.status(200).send(JSON.parse(record.body));
+        setTimeout(
+            () => {
+                res.status(200).send(JSON.parse(record.body));
+            },
+            record.delay ? parseInt(`${record.delay}000`) : 0
+        );
     } catch {
         return res.status(404).json({ name: 'Not Found' });
     }
