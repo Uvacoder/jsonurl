@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Tabs } from "components/tabs";
+import Script from "next/script";
 
 const Home: NextPage = () => {
     const [urls, setUrls] = useState<any[]>([]);
@@ -126,6 +127,20 @@ const Home: NextPage = () => {
 
     return (
         <div className={styles.container}>
+            <Script
+                async
+                src="https://www.googletagmanager.com/gtag/js?id=G-36QB43QBLP"
+                id="gtag"
+            />
+            <Script id="gtagcontent">
+                {`
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    gtag('js', new Date());
+
+                    gtag('config', 'G-36QB43QBLP');
+                `}
+            </Script>
             <Head>
                 <title>JSON url</title>
                 <meta
