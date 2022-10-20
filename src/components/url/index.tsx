@@ -6,13 +6,15 @@ import React from "react";
 import { Mixpanel } from "util/analytics";
 
 export const Url = ({ _id, body }: any) => {
+    const mixpanel = new Mixpanel(true);
+
     const copyToClipboard = (e: any) => {
         navigator.clipboard.writeText(`https://jsonurl.com/${_id}`);
         if (e.type === "keydown") return;
         e.preventDefault();
+        mixpanel.trackCopyToClipboard(_id);
     };
 
-    const mixpanel = new Mixpanel(true);
     const trackUrlOpen = () => {
         mixpanel.trackUrlClick(_id);
     };

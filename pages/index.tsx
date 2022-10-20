@@ -13,19 +13,22 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Tabs } from "components/tabs";
 import Script from "next/script";
-import { useMixpanel } from "util/analytics";
+import { useMixpanel, Mixpanel } from "util/analytics";
 
 const Home: NextPage = () => {
     const [urls, setUrls] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
     const [parent] = useAutoAnimate();
     const [currentTab, setCurrentTab] = useState("json");
-    const { register, handleSubmit, reset, watch, setValue } = useForm();
+    const { register, handleSubmit, reset, watch, setValue, getValues } =
+        useForm();
 
     const pythonCode = watch("python");
     const variable = watch("variable");
 
     useMixpanel();
+
+    const mixpanel = new Mixpanel(true);
 
     const addUrl = (url: any) => {
         if (url.python && currentTab === "python") {
@@ -89,6 +92,10 @@ const Home: NextPage = () => {
 
     const onSubmit = handleSubmit(async (data: any) => {
         setLoading(true);
+        mixpanel.trackCreateButtonPressed(
+            getValues("delay"),
+            currentTab === "json" ? "staticJSON" : "python"
+        );
         const isValid = validate(data);
         if (!isValid) return setLoading(false);
 

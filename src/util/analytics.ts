@@ -38,17 +38,25 @@ export class Mixpanel {
         });
     };
 
-    trackBackendUrlOpened(
-        source: 'rawJSON' | 'shortURL' | 'python',
-        withDelay: boolean,
-        distinct_id: 'string'
-    ) {
-        this.track('backend url opened', {
-            source,
-            withDelay,
-            distinct_id,
+    trackCopyToClipboard = (_id: any) => {
+        this.track('copy to clipboard button pressed', {
+            _id: _id,
         });
-    }
+    };
+
+    trackTabSwitched = (tab: string) => {
+        this.track(`tab switched to ${tab}`);
+    };
+
+    trackCreateButtonPressed = (
+        withDelay: boolean,
+        source: 'python' | 'staticJSON'
+    ) => {
+        this.track('Create button pressed', {
+            withDelay,
+            source,
+        });
+    };
 }
 
 export const useMixpanel = () => {
