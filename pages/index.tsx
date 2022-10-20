@@ -13,6 +13,7 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Tabs } from "components/tabs";
 import Script from "next/script";
+import { useMixpanel } from "util/analytics";
 
 const Home: NextPage = () => {
     const [urls, setUrls] = useState<any[]>([]);
@@ -23,6 +24,8 @@ const Home: NextPage = () => {
 
     const pythonCode = watch("python");
     const variable = watch("variable");
+
+    useMixpanel();
 
     const addUrl = (url: any) => {
         if (url.python && currentTab === "python") {
